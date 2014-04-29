@@ -1,7 +1,7 @@
 from nltk.corpus import wordnet as wn;
 
 '''word = sys.argv[0];'''
-word = 'dark';
+word = 'floss';
 print "WORD:\n" + word;
 print;
 synsets = wn.synsets(word);
@@ -12,38 +12,41 @@ if not synsets:
 else:
     #print synsets;
     print "FIRST SENSE :\n" + synsets[0].name.split(".")[0];
+
 ############### HYPONYMS ###############
 print "\nANTONYMS:"
-lemmas = synsets[0].lemmas;
-if not lemmas:
-    print "Did not get lemmas"
-else:
-    #print "LEMMAS:\n" + str(synsets[0].lemmas[0]);
-    antonyms = synsets[0].lemmas[0].antonyms();
-    if not antonyms:
-        print "Did not get antonyms"
-    else:
-        #print antonyms
-        for antonym in antonyms:
-            antonym = antonym.name.split(".")[0];
-            print "Not "+ antonym +" but ....";
+for synset in synsets: 
+    lemmas = synset.lemmas;
+    if lemmas:
+        #print "LEMMAS:\n" + str(synsets[0].lemmas[0]);
+        for lemma in synset.lemmas:
+            antonyms = lemma.antonyms();
+            if antonyms:
+                #print antonyms
+                for antonym in antonyms:
+                    sAntonym = antonym.name.split(".")[0];
+                    print "Not "+ sAntonym +" but ...."; 
 ############### HYPONYMS ###############
 print "\nHYPERNYMS:"
-hypernyms = synsets[0].hypernyms()
-if not hypernyms:
-    print "Did not get hyponyms";
-else:
-    #print hypernyms;
-    for hypernym in hypernyms:
-        hypernym = hypernym.name.split(".")[0];
-        print "It is a type of " + hypernym;
+for synset in synsets: 
+    hypernyms = synset.hypernyms()
+    if hypernyms:
+        #print hypernyms;
+        for hypernym in hypernyms:
+            sHypernym = hypernym.name.split(".")[0];
+            print "It is a type of " + sHypernym;
+            if hypernym.examples:
+                print  "as in ";
+                print "'" + hypernym.examples[0]+ "'";
 ############### HYPERNYMS ###############
 print "\nHYPONYMS:"
-hyponyms = synsets[0].hyponyms()
-if not hyponyms:
-    print "Did not get hyponyms";
-else:
-    #print hyponyms;
-    for hyponym in hyponyms:
-        hyponym = hyponym.name.split(".")[0];
-        print "It is like a " + hyponym;
+for synset in synsets: 
+    hyponyms = synset.hyponyms()
+    if hyponyms:
+        #print hyponyms;
+        for hyponym in hyponyms:
+            sHyponym = hyponym.name.split(".")[0];
+            print "It is like " + sHyponym;
+            if hyponym.examples:
+                print "as in "
+                print "'" + hyponym.examples[0]+ "'";
